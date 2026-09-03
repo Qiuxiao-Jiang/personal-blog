@@ -1,0 +1,41 @@
+---
+import Base from '../../layouts/Base.astro';
+import PostCard from '../../components/PostCard.astro';
+import { publishedPosts } from '../../lib/posts';
+const posts = await publishedPosts();
+const tags = [...new Set(posts.flatMap(post => post.data.tags))];
+---
+<Base title="所有文章" active="posts">
+  <section class="wrap archive">
+    <div class="page-heading"><span class="eyebrow">THE JOURNAL</span><h1>每一页，都是生活<span class="orange-dot">。</span></h1><p>一些日常，一点思考，还有走过的路。慢慢写，也欢迎你慢慢读。</p></div>
+    <div class="archive-toolbar"><div class="filters" role="group" aria-label="按标签筛选文章"><button class="filter" data-filter="" aria-pressed="true">全部 <span>{posts.length}</span></button>{tags.map(tag => <button class="filter" data-filter={tag} aria-pressed="false">{tag} <span>{posts.filter(post => post.data.tags.includes(tag)).length}</span></button>)}</div><span id="post-count" role="status" aria-live="polite">共 {posts.length} 篇手记</span></div>
+    <div class="post-grid archive-grid">{posts.map((post, index) => <PostCard post={post} index={index} />)}</div>
+    {posts.length === 0 && <p class="empty-message">新的一页，正在慢慢酝酿。</p>}
+    <p class="archive-end">— 生活还在继续，下一页见 —</p>
+  </section>
+</Base>
+<script>
+  const buttons = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-filter]'));
+  const cards = Array.from(document.querySelectorAll<HTMLElement>('[data-tags]'));
+  function selectTag(tag: string) {
+    const selected = buttons.some(button => button.dataset.filter === tag) ? tag : '';
+    for (const button of buttons) button.setAttribute('aria-pressed', String(button.dataset.filter === selected));
+    let count = 0;
+    for (const card of cards) {
+      card.hidden = !!selected && !JSON.parse(card.dataset.tags || '[]').includes(selected);
+      if (!card.hidden) count++;
+    }
+    const status = document.querySelector('#post-count');
+    if (status) status.textContent = `共 ${count} 篇${selected ? `「${selected}」` : ''}手记`;
+  }
+  for (const button of buttons) button.addEventListener('click', () => {
+    const tag = button.dataset.filter || '';
+    const address = new URL(window.location.href);
+    if (tag) address.searchParams.set('tag', tag); else address.searchParams.delete('tag');
+    history.pushState(null, '', address);
+    selectTag(tag);
+  });
+  const restore = () => selectTag(new URLSearchParams(window.location.search).get('tag') || '');
+  window.addEventListener('popstate', restore);
+  restore();
+</script>

@@ -1,0 +1,11 @@
+---
+import Base from '../layouts/Base.astro';
+import { profile } from '../config';
+import { asset, url } from '../lib/posts';
+---
+<Base title="关于我" active="about">
+  <section class="wrap about-page">
+    <div class="page-heading"><span class="eyebrow">THE PERSON BEHIND THE PAGES</span><h1>你好，我是{profile.name}<span class="orange-dot">。</span></h1><p>在辽阔的世界里，经营一个小小的角落。</p></div>
+    <div class="about-layout"><div class="about-picture"><figure class="polaroid"><span class="tape" aria-hidden="true"></span><img src={asset('art/fields.svg')} alt="阳光下的绿色田野插画" width="720" height="480" /><figcaption>此人正在后台运行。 ✿</figcaption></figure><p class="handwritten">{profile.location}</p></div><div class="prose about-copy"><h2>关于我，暂时没有标准答案。</h2><p>{profile.introduction}</p><p>如果一定要分类，大概属于「还在观察」这一类。对很多事好奇，对另一些事保持适度的困惑。人生说明书找不到了，目前凭感觉操作。</p><p>这里像一个没贴标签的抽屉。装着一点日常、一点远方，还有几个尚未形成句子的念头。没有统一主题，偶尔连作者也不知道下一页是什么。</p><h2>一些不太正式的研究方向</h2><div class="interest-list">{profile.interests.map(interest => <span>{interest}</span>)}</div>{(profile.email || profile.social.length > 0) && <section class="contact"><h2>保持联系</h2>{profile.email && <a href={`mailto:${profile.email}`}>{profile.email} ↗</a>}{profile.social.map(link => <a href={link.url} target="_blank" rel="noopener noreferrer">{link.label} ↗</a>)}</section>}{profile.exampleProfile && <p class="sample-notice">这是一份示例个人介绍。本人尚未定稿，内容也可以继续修改。</p>}<a class="text-link" href={url('posts/')}>去看看那些没归类的念头 ↗</a></div></div>
+  </section>
+</Base>

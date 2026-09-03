@@ -1,0 +1,7 @@
+---
+import Base from '../layouts/Base.astro';
+import { url } from '../lib/posts';
+---
+<Base title="这一页走丢了" noindex>
+  <section class="not-found wrap"><span class="eyebrow">A LITTLE DETOUR</span><div class="error-code">4<span>✿</span>4</div><h1>这一页，好像被风吹走了。</h1><p>没关系，回到熟悉的地方，再翻开一个故事。</p><a class="button" href={url()}>回到首页 ↗</a></section>
+</Base>

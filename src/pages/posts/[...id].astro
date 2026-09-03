@@ -1,0 +1,21 @@
+---
+import { render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import { asset, dateLabel, publishedPosts, readingTime, url } from '../../lib/posts';
+export async function getStaticPaths() {
+  const posts = await publishedPosts();
+  return posts.map((post, index) => ({ params: { id: post.id }, props: { post, next: posts[index + 1] || (posts.length > 1 ? posts[0] : undefined) } }));
+}
+const { post, next } = Astro.props;
+const { Content, headings } = await render(post);
+---
+<Base title={post.data.title} description={post.data.description} active="article" image={post.data.cover}>
+  <article class="wrap article-page">
+    <a class="text-link back-link" href={url('posts/')}>← 回到所有文章</a>
+    <header class="article-heading"><div class="eyebrow">A PAGE FROM MY JOURNAL</div><div class="article-tags">{post.data.tags.map(tag => <a class="tag" href={`${url('posts/')}?tag=${encodeURIComponent(tag)}`}># {tag}</a>)}</div><h1>{post.data.title}</h1><div class="post-meta"><time datetime={post.data.date.toISOString()}>{dateLabel(post.data.date)}</time><span>·</span><span>{readingTime(post.body)} 分钟阅读</span>{post.data.example && <span class="example-label">示例文章</span>}</div><p class="article-description">{post.data.description}</p></header>
+    {post.data.cover && <figure class="article-cover"><img src={asset(post.data.cover)} alt={post.data.coverAlt} width="720" height="480" /><figcaption>{post.data.coverAlt}</figcaption></figure>}
+    <div class="article-body-layout"><div class="prose"><Content /></div>{headings.some(heading => heading.depth === 2) && <aside class="toc"><span class="eyebrow">这一页里</span><nav aria-label="文章目录">{headings.filter(heading => heading.depth === 2).map(heading => <a href={`#${heading.slug}`}>{heading.text}</a>)}</nav></aside>}</div>
+    <div class="article-ending"><span aria-hidden="true">✳</span><p>谢谢你，读到这里。</p>{post.data.example && <small>这是演示博客效果的示例文章，可自由替换为你的真实记录。</small>}</div>
+    {next && <a class="next-post" href={url(`posts/${next.id}/`)}><span>接着翻一页</span><strong>{next.data.title}</strong><span aria-hidden="true">↗</span></a>}
+  </article>
+</Base>
