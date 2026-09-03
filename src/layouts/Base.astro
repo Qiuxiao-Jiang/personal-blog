@@ -1,10 +1,11 @@
 ---
 import '../styles/global.css';
+import '../styles/doodle.css';
 import { profile } from '../config';
 import { url, asset } from '../lib/posts';
 interface Props { title?: string; description?: string; active?: string; image?: string; noindex?: boolean; }
 const { title, description = profile.description, active = '', image, noindex = false } = Astro.props;
-const pageTitle = title ? `${title} · ${profile.title}` : `${profile.title} · 把日子，写成喜欢的样子`;
+const pageTitle = title ? `${title} · ${profile.title}` : `${profile.title} · 生活嘛，乱涂乱画也行`;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 ---
 <!doctype html>
@@ -12,7 +13,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#f5f3eb" />
+    <meta name="theme-color" content="#d4ff63" />
     <title>{pageTitle}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
@@ -38,7 +39,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
         <a href={url('posts/')} aria-current={active === 'posts' || active === 'article' ? 'page' : undefined}>所有文章</a>
         <a href={url('about/')} aria-current={active === 'about' ? 'page' : undefined}>关于我<span class="nav-flower" aria-hidden="true"> ✳</span></a>
       </nav>
-      <span class="header-note">日子很慢，故事很长 <span aria-hidden="true">↗</span></span>
+      <span class="header-note">禁止无聊！ <span aria-hidden="true">↗</span></span>
     </header>
     <main id="main"><slot /></main>
     <footer class="site-footer wrap">

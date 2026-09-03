@@ -1,6 +1,8 @@
 # 生活碎页
 
-手账拼贴风中文个人博客，使用 Astro、TypeScript、原生 CSS 和 Markdown。所有插画保存在 `public/art`，无需外部图片或字体服务。
+大胆撞色的涂鸦风中文个人博客，使用 Astro、TypeScript、原生 CSS 和 Markdown。紫色、荧光绿、亮橙和粉色搭配粗黑描边与手绘贴纸；示例文案采用抽象、跳脱的风格。所有插画保存在 `public/art`，无需外部图片或字体服务。
+
+布局与通用样式位于 `src/styles/global.css`，涂鸦主题配色及组件外观集中在 `src/styles/doodle.css`。
 
 公开地址：[生活碎页](https://qiuxiao-jiang.github.io/personal-blog/)。源码仓库：[Qiuxiao-Jiang/personal-blog](https://github.com/Qiuxiao-Jiang/personal-blog)。
 
