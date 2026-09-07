@@ -52,6 +52,20 @@ a:focus-visible, button:focus-visible { outline-color: var(--purple); outline-of
   box-shadow: 5px 5px 0 var(--ink); padding: 12px 21px; font-weight: 700; transform: rotate(-2deg);
 }
 .button:hover { background: var(--lime); color: var(--ink); box-shadow: 2px 2px 0 var(--ink); transform: translate(2px, 2px) rotate(-2deg); }
+.hero-actions .button {
+  width: 148px;
+  height: 148px;
+  padding: 22px;
+  border-radius: 50%;
+  flex-direction: column;
+  gap: 4px;
+  text-align: center;
+  line-height: 1.55;
+  transform: rotate(-7deg);
+}
+.hero-actions .button:hover {
+  transform: translate(2px, 2px) rotate(-7deg);
+}
 .hero-actions .handwritten { color: var(--purple); font-size: 14px; font-weight: 700; }
 .hero-footnote { color: #5c5764; margin-top: 34px; letter-spacing: .7px; }
 .status-dot { width: 8px; height: 8px; background: var(--orange); border: 1px solid var(--ink); }
@@ -202,6 +216,7 @@ a:focus-visible, button:focus-visible { outline-color: var(--purple); outline-of
   .hero-description { font-size: 13px; }
   .hero-actions { gap: 17px; margin-top: 24px; }
   .button { padding: 11px 15px; gap: 14px; font-size: 12px; }
+  .hero-actions .button { width: 126px; height: 126px; padding: 17px; gap: 1px; }
   .hero-actions .handwritten { font-size: 11px; max-width: 110px; }
   .hero-footnote { margin-top: 30px; font-size: 9px; }
   .hero-collage { height: 401px; margin-top: 26px; }
